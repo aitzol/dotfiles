@@ -1,0 +1,5 @@
+xscreensaver -no-splash &
+xautolock -time 2 -locker 'xscreensaver-command --lock'&
+parcellite &
+urxvtd -q -f -o
+gnome-keyring-daemon -s
