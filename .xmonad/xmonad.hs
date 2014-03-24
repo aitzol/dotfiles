@@ -1,6 +1,5 @@
 import XMonad
 import XMonad.Layout.NoBorders (noBorders)
-import XMonad.Layout.SimplestFloat
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Spacing 
 import XMonad.Hooks.DynamicLog
@@ -39,7 +38,7 @@ myManageHook = composeAll
    ]
   where role = stringProperty "WM_WINDOW_ROLE"
         viewShift = doF . liftM2 (.) W.greedyView W.shift
-myLayout = onWorkspace "1:web" nobordersLayout $ onWorkspace "6" simplestFloat $ layoutHook defaultConfig
+myLayout = onWorkspace "1:web" nobordersLayout $ layoutHook defaultConfig
 
 main = do
    init <- spawnPipe "/home/aitzol/.xmonad/autostart"
