@@ -1,5 +1,9 @@
+trayer --edge top --align right --transparent true --width 10 --tint 0x191970 --height 16 --expand true --widthtype request --heighttype request --SetDockType true --SetPartialStrut true &
 xscreensaver -no-splash &
 xautolock -time 2 -locker 'xscreensaver-command --lock'&
 parcellite &
 urxvtd -q -f -o
-gnome-keyring-daemon -s
+/usr/local/bin/gtimelog &
+gnome-keyring-daemon --start
+export GNOME_KEYRING_SOCKET
+export GNOME_KEYRING_PID
