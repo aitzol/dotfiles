@@ -1,8 +1,14 @@
 (require 'tramp-cmds)
+(require 'package)
+(package-initialize)
+(add-to-list 'package-archives
+;	     '("marmalade" . "http://marmalade.ferrier.me.uk/packages/") t)
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+	     
 (setq twittering-use-master-password t)
 
 
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (global-set-key "\M-g" 'goto-line)
 (global-set-key "\M-m" 'magit-status)
 
@@ -43,22 +49,23 @@
 
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(global-font-lock-mode t nil (font-lock))
  '(inhibit-startup-screen t)
  '(py-pychecker-command "pychecker.sh")
  '(py-pychecker-command-args (quote ("")))
- '(python-check-command "pychecker.sh"))
+ '(python-check-command "pychecker.sh")
+ '(tool-bar-mode nil))
 
  
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "#2F4F4F" :foreground "white")))))
 ;;Laguntzak
 
@@ -129,3 +136,13 @@
       (delete-file tempfile))))
 
 (add-hook 'python-mode-hook '(lambda () (local-set-key (kbd "C-c C-i") 'igor)))
+
+;; Show git branch on status line
+(defadvice vc-git-mode-line-string (after plus-minus (file) compile activate)
+  (setq ad-return-value
+    (concat ad-return-value
+            (let ((plus-minus (vc-git--run-command-string
+                               file "diff" "--numstat" "--")))
+              (and plus-minus
+                   (string-match "^\\([0-9]+\\)\t\\([0-9]+\\)\t" plus-minus)
+                   (format " +%s-%s" (match-string 1 plus-minus) (match-string 2 plus-minus)))))))
