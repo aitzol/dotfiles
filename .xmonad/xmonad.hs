@@ -9,6 +9,7 @@ import XMonad.Util.EZConfig
 import System.IO
 import Control.Monad
 import qualified XMonad.StackSet as W
+import XMonad.Hooks.ICCCMFocus
 
 defaultLayouts = tiled ||| Mirror tiled ||| Full  
   where  
@@ -26,25 +27,29 @@ defaultLayouts = tiled ||| Mirror tiled ||| Full
    
  -- Define layout for specific workspaces  
 nobordersLayout = noBorders $ Full  
-myWorkspaces = ["1:web","2:shell","3:emacs","4:VM","5:long","6","7","8","9"]
+myWorkspaces = ["1:web","2:shell","3:emacs","4:VM","5:long","6","7","8:AndroidStudio","9:ADT"]
 
 myManageHook = composeAll
    [ className =? "Gimp"      --> viewShift "6"
    , className =? "Firefox" --> viewShift "1:web"
    , className =? "Emacs" --> viewShift "3:emacs"
    , className =? "Worker" --> viewShift "5:long"
+   , className =? "ADT" --> viewShift "9:ADT"
+   , className =? "jetbrains-android-studio" --> viewShift "8:AndroidStudio"
    , className =? "trayer" --> doIgnore
    , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
    ]
   where role = stringProperty "WM_WINDOW_ROLE"
         viewShift = doF . liftM2 (.) W.greedyView W.shift
-myLayout = onWorkspace "1:web" nobordersLayout $ layoutHook defaultConfig
+myLayout = onWorkspace "1:web" nobordersLayout $ onWorkspace "8:AndroidStudio" nobordersLayout $ onWorkspace "9:ADT" nobordersLayout $ layoutHook defaultConfig
+
 
 main = do
    init <- spawnPipe "/home/aitzol/.xmonad/autostart"
    xmproc <- spawnPipe "/usr/bin/xmobar /home/aitzol/.xmonad/xmobarrc"
    xmonad  $ defaultConfig
        { terminal = "urxvt"
+       , logHook = takeTopFocus
        , modMask  = mod4Mask
        , borderWidth = 1
        , normalBorderColor = "#60A1AD"
