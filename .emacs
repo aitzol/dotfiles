@@ -4,6 +4,8 @@
 (add-to-list 'package-archives
 ;	     '("marmalade" . "http://marmalade.ferrier.me.uk/packages/") t)
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 	     
 (setq twittering-use-master-password t)
 
@@ -11,7 +13,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (global-set-key "\M-g" 'goto-line)
 (global-set-key "\M-m" 'magit-status)
-
+(exec-path-from-shell-initialize)
 (setq x-select-enable-clipboard t)
 (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 ;; PYTHON-MODE
@@ -53,11 +55,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(global-font-lock-mode t nil (font-lock))
- '(inhibit-startup-screen t)
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
+ '(custom-safe-themes
+   (quote
+    ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
  '(py-pychecker-command "pychecker.sh")
  '(py-pychecker-command-args (quote ("")))
- '(python-check-command "pychecker.sh")
  '(tool-bar-mode nil))
 
  
@@ -66,7 +69,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#2F4F4F" :foreground "white")))))
+ )
 ;;Laguntzak
 
 (fset 'break
@@ -146,3 +149,5 @@
               (and plus-minus
                    (string-match "^\\([0-9]+\\)\t\\([0-9]+\\)\t" plus-minus)
                    (format " +%s-%s" (match-string 1 plus-minus) (match-string 2 plus-minus)))))))
+(package-initialize)
+(elpy-enable)
