@@ -150,13 +150,13 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	output DVI-I-1
+	output DVI-I-2
 	mode hide
-	tray_output primary
+	tray_output DVI-I-2
         status_command i3status
 }
 bar {
-	output DVI-I-0
+	output DVI-I-1
 	status_command i3status --config ~/.i3status.workspacesonly.conf
 	mode hide
 	tray_output none
@@ -177,7 +177,9 @@ assign [class="^ADT$"] 9
 assign [class="^jetbrains-android-studio$"] 8
 assign [class="^Gtimelog$"] 1
 
-exec xscreensaver -no-splash &
+#exec xscreensaver -no-splash &
+#blank it after 5 minutes, suspend and then go off after 5+5 minutes.
+exec xset dpms 300 600 900 &
 #exec xautolock -time 2 -locker 'xscreensaver-command --lock'&
 # ceerious styled i3
 set $bg #2c2c2e
@@ -199,3 +201,5 @@ client.focused_inactive $bg $bg $ac $id
 client.urgent $rd $rd $tx $id
 #border & indicator are ignored
 #client.placeholder $bg $bg $bg $bg
+#Notification daemon
+exec dunst &
