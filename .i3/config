@@ -33,7 +33,7 @@ bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+p exec dmenu_run
+bindsym $mod+p exec dmenu_run -m 0 -nb '#134d00'
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -150,34 +150,30 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	output DVI-I-2
+	output DVI-I-1
 	mode hide
-	tray_output DVI-I-2
+	tray_output DVI-I-1
         status_command i3status
 }
 bar {
-	output DVI-I-1
+	output DVI-I-2
 	status_command i3status --config ~/.i3status.workspacesonly.conf
 	mode hide
 	tray_output none
 }
 #Aitzol
 focus_follows_mouse no
-bindsym $mod+z exec xscreensaver-command -lock
-bindsym $mod+F1 exec mpc -h /tmp/mpdsocket toggle
-bindsym $mod+F2 exec mpc -h /tmp/mpdsocket prev
-bindsym $mod+F3 exec mpc -h /tmp/mpdsocket next
-bindsym $mod+F4 exec mpc -h /tmp/mpdsocket volume -2
-bindsym $mod+F5 exec mpc -h /tmp/mpdsocket volume +2
+bindsym $mod+z exec xtrlock 
 
 assign [class="^Gimp$"] 6
 assign [class="^Firefox$"] 1
 assign [class="^Emacs$"] 3
 assign [class="^ADT$"] 9
 assign [class="^jetbrains-android-studio$"] 8
-assign [class="^Gtimelog$"] 1
+assign [class="^Gtimelog$"] 2
 
 #exec xscreensaver -no-splash &
+exec blueman-applet &
 #blank it after 5 minutes, suspend and then go off after 5+5 minutes.
 exec xset dpms 300 600 900 &
 #exec xautolock -time 2 -locker 'xscreensaver-command --lock'&
